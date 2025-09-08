@@ -77,7 +77,9 @@ const displayContacts = () => {
 
 const detailContact = (name) => {
   const contacts = loadContacts();
-  const contact = contacts.find((c) => c.name === name);
+  const contact = contacts.find(
+    (c) => c.name.toLowerCase() === name.toLowerCase()
+  );
 
   if (!contact) {
     console.log(chalk.red("Invalid name!"));
