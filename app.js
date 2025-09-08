@@ -59,7 +59,7 @@ yargs
 yargs
   .command({
     command: "detail",
-    describe: "Detail a contact",
+    describe: "Detail a contact by name",
     builder: {
       name: {
         describe: "name",
@@ -73,5 +73,21 @@ yargs
     },
   })
   .demandCommand();
+
+yargs.command({
+  command: "delete",
+  describe: "Delete a contact by name",
+  builder: {
+    name: {
+      describe: "name",
+      demandOption: true,
+      type: "string",
+    },
+  },
+  handler(argv) {
+    contacts.deleteContact(argv.name);
+    rl.close();
+  }
+}).demandCommand();
 
 yargs.parse();

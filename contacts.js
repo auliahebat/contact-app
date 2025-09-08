@@ -2,6 +2,7 @@ const fs = require("fs");
 const readline = require("readline");
 const chalk = require("chalk");
 const validator = require("validator");
+const { boolean } = require("yargs");
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -91,6 +92,19 @@ const detailContact = (name) => {
   );
 };
 
+const deleteContact = (name) => {
+  const contacts = loadContacts();
+  const newContacts = contacts.filter(
+    (contact) => contact.name.toLowerCase() !== name.toLowerCase()
+  );
+  if(newContacts.length >= contacts.length) {
+    console.log(chalk.red("Invalid name!"));
+    return;
+  }
+  fs.writeFileSync(filePath, JSON.stringify(newContacts, null, 2));
+  console.log(chalk.blue("Contact deleted successfully!"));
+};
+
 module.exports = {
   dynamicQuestion,
   saveContact,
@@ -98,4 +112,5 @@ module.exports = {
   loadContacts,
   displayContacts,
   detailContact,
+  deleteContact,
 };
